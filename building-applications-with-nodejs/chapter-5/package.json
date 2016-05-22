@@ -1,0 +1,24 @@
+{
+  "name": "chapter-5-first-restful-api",
+  "version": "0.0.1",
+  "description": "Example created following instructions from the book \"Building applications with NodeJS\", by William Bruno Moraes. Only portuguese version is available.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "nodemon": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "api-restful"
+  ],
+  "author": "Stanley Sathler <stanleysathlerpinto@gmail.com>",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.1",
+    "config": "^1.20.3",
+    "debug": "^2.2.0",
+    "express": "^4.13.4",
+    "method-override": "^2.3.6",
+    "mongojs": "^2.4.0"
+  }
+}
