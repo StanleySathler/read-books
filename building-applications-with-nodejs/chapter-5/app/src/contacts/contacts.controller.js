@@ -1,45 +1,52 @@
 'use strict';
 
 var debug = require('debug')('nodejs_book:controller');
-var model = require('./contacts.model');
+var model = require('./contacts.model')();
 
 function ContactsController(){
 	var self = this;
 	self.model = model;
 
 	self.findAll = function(req, res, next){
-		self.model.find( {}, function(err, data){
-			if(err) return next(err);
-			res.json(data);
-		});
+		self.model.findAsync({})
+		    .then(function(data){
+		    	res.json(data);
+		    })
+		    .catch(next);
 	};
 
 	self.findById = function(req, res, next){
-		self.model.findOne( req.params.id, function(err, data){
-			if(err) return next(err);
-			res.json(data);
-		});
+		var id = req.params.id;
+
+		self.model.findOneAsync(id)
+		    .then(function(data){
+		    	res.json(data);	
+		    })
+		    .catch(next);
 	};
 
 	self.create = function(req, res, next){
-		self.model.create( req.body, function(err, data){
-			if(err) return next(err);
-			res.json(data);
-		});
+		self.model.createAsync(req.body)
+		    .then(function(data){
+		    	res.json(data);
+		    })
+		    .catch(next);
 	};
 
 	self.update = function(req, res, next){
-		self.model.update( req.params.id, req.body, function(err, data){
-			if(err) return next(err);
-			res.json(data);
-		});
+		self.model.updateAsync(req.params.id, req.body)
+		    .then(function(data){
+		    	res.json(data);
+		    })
+		    .catch(next);
 	};
 
 	self.delete = function(req, res, next){
-		self.model.remove( req.params.id, function(err, data){
-			if(err) return next(err);
-			res.json(data);
-		});
+		self.model.removeAsync(req.params.id)
+		    .then(function(data){
+		    	res.json(data);
+		    })
+		    .catch(next);
 	};
 }
 

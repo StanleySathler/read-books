@@ -10,6 +10,7 @@ var faviconBlocker  = require('./middlewares/favicon-blocker');
 var enableCors      = require('./middlewares/enable-cors');
 var errorHandler    = require('./middlewares/error-handler');
 var routes          = require('./routes');
+var basicAuth       = require('./middlewares/basic-auth');
 var app             = express();
 
 /**
@@ -22,6 +23,7 @@ app.use(methodOverride('X-Method-Override'));
 app.use(methodOverride('_method'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(basicAuth);
 
 /**
  * Routes

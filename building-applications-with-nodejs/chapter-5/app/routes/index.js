@@ -1,8 +1,11 @@
+'use strict';
+
 /**
  * Dependencies
  **/
 var router   = require('express').Router();
 var contacts = require('../src/contacts/contacts.routes');
+var login    = require('../src/login/login.routes');
 
 /**
  * Routes
@@ -13,6 +16,7 @@ router.get('/', function(req, res){
 });
 
 router.use('/contacts', contacts);
+router.use('/login', login);
 
 /**
  * Exports as a module

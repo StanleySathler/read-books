@@ -1,34 +1,48 @@
 'use strict';
 
-var mongodb = require('../../db/db.mongo');
+/**
+ * Dependencies
+ **/
+var mongoose = require('../../db/db.mongoose');
+var schema   = require('./contacts.schema');
+var bluebird = require('bluebird');
 
+/**
+ * Model declaration
+ **/
 function ContactsModel(){
-	var self = this;
-	self.mongodb = mongodb;
-	self.collection = self.mongodb.collection('contacts');
+	var self   = this;
+	self.contact = mongoose.model('Contact', schema);
 
 	self.find = function(query, callback){
-		self.collection.find(query, callback);
+		self.contact.find(query).exec(callback);
 	};
 
 	self.findOne = function(id, callback){
-		var query = { _id: self.mongodb.ObjectId(id) };
-		self.collection.findOne(query, callback);
+		var query = { _id: id };
+		self.contact.findOne(query).exec(callback);
 	};
 
 	self.create = function(data, callback){
-		self.collection.insert(data, callback);
+		new self.contact(data).save(function(err, result){
+			callback(err, result);
+		});
 	};
 
-	self.update = function(id, data, callback){
-		var query = { _id: self.mongodb.ObjectId(id) };
-		self.collection.update(query, data, callback);
+	self.udpate = function(id, data, callback){
+		var query = { _id: id };
+		self.contact.update(query, data).exec(callback);
 	};
 
 	self.remove = function(id, callback){
-		var query = { _id: self.mongodb.ObjectId(id) };
-		self.collection.remove(query, callback);
+		var query = { _id: id };
+		self.contact.remove(query).exec(callback);
 	};
 }
 
-module.exports = new ContactsModel();
+/**
+ * Exports as a module
+ **/
+module.exports = function(){
+	return bluebird.promisifyAll(new ContactsModel());
+}
